@@ -1,1 +1,1 @@
-"# wowStats" 
+# wowStats
