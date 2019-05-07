@@ -5,12 +5,12 @@ import sqlite3
 # Set up DB and Connection
 connection = sqlite3.connect("players.db")
 cursor = connection.cursor()
-cursor.execute("CREATE TABLE IF NOT EXISTS players(name TEXT, iLVL INTEGER, crit INTEGER, haste INTEGER, mastery INTEGER, versatility INTEGER);")
+cursor.execute("CREATE TABLE IF NOT EXISTS players(name TEXT, server TEXT, iLVL INTEGER, crit INTEGER, haste INTEGER, mastery INTEGER, versatility INTEGER);")
 
 # player = ('FurplePence', 408, 15, 6, 78, 10)
 def addPlayer(player):
 	cursor = connection.cursor()
-	sql = 'INSERT INTO players(name, iLVL, crit, haste, mastery, versatility) VALUES(?,?,?,?,?,?)'
+	sql = 'INSERT INTO players(name, server, iLVL, crit, haste, mastery, versatility) VALUES(?,?,?,?,?,?,?)'
 	cursor.execute(sql, player)
 
 def printDB():

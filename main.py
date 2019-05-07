@@ -14,10 +14,9 @@ driver = webdriver.Chrome()
 
 driver.get("https://www.worldofwargraphs.com/pve-stats/best-players/monk/mistweaver")
 
-NUM_RESULTS = 10 #102
+NUM_RESULTS = 1 #102
 playerXPaths = []
 playerLinks = []
-players = []
 
 def pretty(d, indent=0):
    for key, value in d.items():
@@ -34,12 +33,26 @@ while i < 2+NUM_RESULTS:
 
 for i in range(len(playerXPaths)):
 	print(playerXPaths[i])
-	playerLinks.append(driver.find_element_by_xpath(playerXPaths[i]).get_attribute('href'))
+	playerLinks.append(driver.find_element_by_xpath(playerXPaths[i]))
 
 
 for i in range(len(playerLinks)):
-	print(playerLinks[i])
-	stats.addPlayerStats(playerLinks[i])
+	print("Player Profile Link:",playerLinks[i].get_attribute('href'))
+	stats.addPlayerStats(playerLinks[i].get_attribute('href'))
+	'''
+	print("********************************TESTING********************************")
+	#stats.test(playerLinks[i])
+	playerLinks[i].click()
+	#driver.find_elements_by_class_name("item-specs")
+
+	#/html/body/div[1]/div/div[3]/div[2]/div[4]/div/div[1]/div[1]/div[2]/div[1]/a/div/div[1]/div[3]
+	#print(driver.find_element_by_xpath("//*[@id=\"iziModal3159703\"]/div/div/div[3]/div[2]"))
+
+
+	#iziModal3159703 > div > div > div.List.List--gutters.List--top
+	#iziModal3159703 > div > div > div.List.List--gutters.List--top\
+	#//*[@id="iziModal3159703"]/div/div/div[3]/div[2]
+	'''
 	
 db.printDB()
 db.closeConnection()

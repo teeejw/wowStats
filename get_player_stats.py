@@ -10,20 +10,23 @@ def addPlayerStats(page):
 	soup = BeautifulSoup(page, 'html.parser')
 
 	# Name
-	# <a class="Link CharacterHeader-name" href="/en-gb/character/eu/tarren-mill/pottermonk">Pottermonk</a>
 	nameSearch = soup.find("a", class_="Link CharacterHeader-name")
 	name = nameSearch.contents[0]
 	print(name)
 
+	# Server
+	serverSearch = soup.find_all("div", class_="CharacterHeader-detail")
+	server = serverSearch[2].contents[0]
+	server = server[1:] # remove leading \xa0 char
+	print("Server:", server)
+
 	# iLVL
-	# <div class="Media-text">418 ilvl</div>
 	iLVLSearch = soup.find_all("div", class_="Media-text")
 	iLVL = iLVLSearch[1].contents[0]
-	iLVL = iLVL.split()[0]
-	print(iLVL)
+	iLVL = iLVL.split()[0] # xxx ilvl --> xxx
+	print("iLVL:", iLVL)
 
 	# Crit
-	# <div class="Media Media--gutterLarge color-stat-CRITICALSTRIKE Media--large" media-medium="!Media--small Media--large" queryselectoralways="0" media-original="Media Media--small Media--gutterLarge color-stat-CRITICALSTRIKE"><div class="Media-image"><span class="Icon Icon--critical-strike Media-icon"><svg class="Icon-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 64 64" focusable="false"><use xlink:href="/static/components/Icon/Icon.svg#critical-strike"></use></svg></span></div><div class="Media-text"><span>26%</span><div class="font-semp-xSmall-white text-upper">Critical Strike</div></div></div>
 	critSearch = soup.find("div", class_="color-stat-CRITICALSTRIKE")
 	critSearch = critSearch.find_all("span")
 	crit = critSearch[1].contents[0]
@@ -47,5 +50,15 @@ def addPlayerStats(page):
 	versatility = versatilitySearch[1].contents[0]
 	print("Versatility:", versatility)
 
-	player = (name, iLVL, crit, haste, mastery, versatility)
+	player = (name, server, iLVL, crit, haste, mastery, versatility)
 	db.addPlayer(player)
+
+def test(page):
+	page = urlopen(page)
+	soup = BeautifulSoup(page, 'html.parser')
+
+# <div class="GameIcon GameIcon--EPIC GameIcon--azerite GameIcon--slot CharacterProfile-itemIcon CharacterProfile-itemSlot GameIcon--transmog GameIcon--large" media-wide="GameIcon--large" queryselectoralways="0" media-original="GameIcon GameIcon--EPIC GameIcon--azerite GameIcon--slot CharacterProfile-itemIcon CharacterProfile-itemSlot GameIcon--transmog"><div class="GameIcon-icon" style="background-image:url(&quot;https://render-eu.worldofwarcraft.com/icons/56/inv_helm_leather_zandalardungeon_c_01.jpg&quot;);"></div><div class="GameIcon-transmog"></div><div class="GameIcon-borderImage"></div></div>
+	#azeriteTraitsSearch = soup.find_all("div", class_="CharacterProfile-itemSlot")
+	azeriteTraitsSearch = soup.find_all(string="Font of Life")
+	for t in azeriteTraitsSearch:
+		print(t.prettify())
