@@ -5,12 +5,14 @@ import codecs
 import db
 
 # tmp_page = 'https://worldofwarcraft.com/en-us/character/us/tichondrius/Furplepence'
+'''
+Language Stuff
+'있습니다'.encode('utf-8') -> b'\xec\x9e\x88\xec\x8a\xb5\xeb\x8b\x88\xeb\x8b\xa4'
+'''
 
 def addPlayerStats(page):
 	page = urlopen(page)
 	soup = BeautifulSoup(page, 'html.parser')
-
-	file = codecs.open("out.txt", "w", "utf-8")
 
 	# Name
 	nameSearch = soup.find("a", class_="Link CharacterHeader-name")
@@ -21,16 +23,9 @@ def addPlayerStats(page):
 	serverSearch = soup.find_all("div", class_="CharacterHeader-detail")
 	server = serverSearch[2].contents[0]
 	server = server[1:] # remove leading \xa0 char
-
-
-	'''
-	있습니다
-	'있습니다'.encode('utf-8') -> b'\xec\x9e\x88\xec\x8a\xb5\xeb\x8b\x88\xeb\x8b\xa4'
-	'''
 	print("Server:", server)
 
 	# iLVL
-	# FAILS ON KOREAN PAGES
 	iLVLSearch = soup.find_all("div", class_="Media-text")
 	iLVL = iLVLSearch[1].contents[0]
 	# Does not work for all languages

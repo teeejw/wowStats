@@ -33,10 +33,10 @@ if __name__ == "__main__":
 	cursor = connection.cursor()
 	result = pd.read_sql_query("SELECT * FROM players", connection)
 	cursor.close()
-	
+
 	fileName = "out.txt"
 	if len(sys.argv) == 2:
 		fileName = sys.argv[1]
 	file = codecs.open(fileName, "w", "utf-8")
 
-	result.to_csv(fileName, sep='\t', encoding='utf-8')
+	result.to_csv(fileName, sep='\t\t', encoding='utf-8')

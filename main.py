@@ -26,12 +26,12 @@ driver = webdriver.Chrome()
 
 driver.get("https://www.worldofwargraphs.com/pve-stats/best-players/monk/mistweaver")
 
-NUM_RESULTS = 102
+NUM_RESULTS = 100
 playerXPaths = []
 playerLinks = []
 
 i = 2
-while i < NUM_RESULTS:
+while i < 2+NUM_RESULTS:
 	playerXPaths.append("//*[@id=\"content\"]/div/div[4]/div[2]/div[1]/table/tbody/tr[{}]/td[5]/a".format(i))
 	i += 1
 
