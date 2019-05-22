@@ -10,7 +10,7 @@ Language Stuff
 '있습니다'.encode('utf-8') -> b'\xec\x9e\x88\xec\x8a\xb5\xeb\x8b\x88\xeb\x8b\xa4'
 '''
 
-def addPlayerStats(page):
+def addPlayerStats(page, rank):
 	page = urlopen(page)
 	soup = BeautifulSoup(page, 'html.parser')
 
@@ -61,7 +61,8 @@ def addPlayerStats(page):
 	versatility = versatility.split("%")[0]
 	print("Versatility:", versatility)
 
-	player = (name, server, iLVL, crit, haste, mastery, versatility)
+	player = (rank, name, server, iLVL, crit, haste, mastery, versatility)
+	print(player)
 	db.addPlayer(player)
 
 def test(page):

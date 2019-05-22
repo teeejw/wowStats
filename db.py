@@ -1,4 +1,4 @@
-# type nul > players.db
+# type nul > $database.db
 
 import sqlite3
 import pandas as pd
@@ -7,14 +7,16 @@ import codecs
 
 # Set up DB and Connection
 connection = sqlite3.connect("players.db")
+#connection = sqlite3.connect("test.db")
+
 cursor = connection.cursor()
-cursor.execute("CREATE TABLE IF NOT EXISTS players(name TEXT, server TEXT, iLVL INTEGER, crit INTEGER, haste INTEGER, mastery INTEGER, versatility INTEGER);")
+cursor.execute("CREATE TABLE IF NOT EXISTS players(rank INTEGER, name TEXT, server TEXT, iLVL INTEGER, crit INTEGER, haste INTEGER, mastery INTEGER, versatility INTEGER);")
 connection.commit()
 
-# player = ('FurplePence', 408, 15, 6, 78, 10)
+# player = (1, 'FurplePence', 'Tichondrius', 408, 15, 6, 78, 10)
 def addPlayer(player):
 	cursor = connection.cursor()
-	sql = 'INSERT INTO players(name, server, iLVL, crit, haste, mastery, versatility) VALUES(?,?,?,?,?,?,?)'
+	sql = 'INSERT INTO players(rank, name, server, iLVL, crit, haste, mastery, versatility) VALUES(?,?,?,?,?,?,?,?)'
 	cursor.execute(sql, player)
 	connection.commit()
 

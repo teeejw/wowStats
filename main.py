@@ -44,7 +44,7 @@ for i in range(len(playerLinks)):
 	print("Player ", i+1, "/", NUM_RESULTS, sep="")
 	print("Player Profile Link:",playerLinks[i].get_attribute('href'))
 	# playerLinks[i].click()
-	stats.addPlayerStats(playerLinks[i].get_attribute('href'))
+	stats.addPlayerStats(playerLinks[i].get_attribute('href'), i+1)
 
 	#TODO: GET AZERITE TRAITS FROM raider.io???
 
