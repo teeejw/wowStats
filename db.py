@@ -20,18 +20,15 @@ Database Schma
 		versatility INTEGER
 '''
 
-# Set up DB and Connection
-#connection = sqlite3.connect("players.db")
-connection = sqlite3.connect("test.db")
+# Allow script to access connection
+connection = None
 
-cursor = connection.cursor()
-cursor.execute("CREATE TABLE IF NOT EXISTS players(rank INTEGER, name TEXT, server TEXT, iLVL INTEGER, crit INTEGER, haste INTEGER, mastery INTEGER, versatility INTEGER);")
-connection.commit()
+
 
 # player = (1, 'FurplePence', 'Tichondrius', 408, 15, 6, 78, 10)
 def addPlayer(player):
 	cursor = connection.cursor()
-	sql = 'INSERT INTO players(rank, name, server, iLVL, crit, haste, mastery, versatility) VALUES(?,?,?,?,?,?,?,?)'
+	sql = 'INSERT INTO {}(rank, name, server, iLVL, crit, haste, mastery, versatility) VALUES(?,?,?,?,?,?,?,?)'.format(table)
 	cursor.execute(sql, player)
 	connection.commit()
 
@@ -46,7 +43,18 @@ def commitConnection():
 def closeConnection():
 	connection.close()
 
+def establishConnection(database):
+	connection = sqlite3.connect(database)
+
+def establishTable(table):
+	cursor = connection.cursor()
+	exec_string = "CREATE TABLE IF NOT EXISTS players(rank INTEGER, name TEXT, server TEXT, iLVL INTEGER, crit INTEGER, haste INTEGER, mastery INTEGER, versatility INTEGER);"
+	cursor.execute()
+	connection.commit()
+
+
 if __name__ == "__main__":
+	connection 
 	cursor = connection.cursor()
 	result = pd.read_sql_query("SELECT * FROM players", connection)
 	cursor.close()

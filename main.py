@@ -32,10 +32,10 @@ playerXPaths = []
 playerLinkPaths =[]
 playerLinks = []
 
-if len(sys.argv) = 3:
+if len(sys.argv) == 3:
 	database = sys.argv[1]
 	table = sys.argv[2]
-else
+else:
 	database = 'players.db'
 	table = 'MistweaverMonk'
 
