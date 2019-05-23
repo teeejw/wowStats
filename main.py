@@ -29,7 +29,9 @@ driver.get("https://www.worldofwargraphs.com/pve-stats/best-players/monk/mistwea
 
 NUM_RESULTS = 100
 playerXPaths = []
+playerLinkPaths =[]
 playerLinks = []
+
 if len(sys.argv) = 3:
 	database = sys.argv[1]
 	table = sys.argv[2]
@@ -44,15 +46,16 @@ while i < 2+NUM_RESULTS:
 
 for i in range(len(playerXPaths)):
 	print(playerXPaths[i])
-	playerLinks.append(driver.find_element_by_xpath(playerXPaths[i]))
+	playerLinkPaths.append(driver.find_element_by_xpath(playerXPaths[i]))
 
 
-for i in range(len(playerLinks)):
+for i in range(len(playerLinkPaths)):
 	print("Player ", i+1, "/", NUM_RESULTS, sep="")
-	print("Player Profile Link:",playerLinks[i].get_attribute('href'))
+	print("Player Profile Link:",playerLinkPaths[i].get_attribute('href'))
+	playerLinks = playerLinkPaths[i].get_attribute('href')
 	# playerLinks[i].click()
 	rank = i+1
-	stats.addPlayerStats(playerLinks[i].get_attribute('href'), rank, table)
+	stats.addPlayerStats(database, table, playerLinks[i], rank)
 
 	#TODO: GET AZERITE TRAITS FROM raider.io???
 
