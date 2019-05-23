@@ -13,6 +13,7 @@ from selenium.webdriver.support import expected_conditions as EC # available sin
 
 import get_player_stats as stats
 import db
+import sys
 
 '''
 # Kill webdriver processes that weren't exited properly
@@ -29,6 +30,12 @@ driver.get("https://www.worldofwargraphs.com/pve-stats/best-players/monk/mistwea
 NUM_RESULTS = 100
 playerXPaths = []
 playerLinks = []
+if len(sys.argv) = 3:
+	database = sys.argv[1]
+	table = sys.argv[2]
+else
+	database = 'players.db'
+	table = 'MistweaverMonk'
 
 i = 2
 while i < 2+NUM_RESULTS:
@@ -44,7 +51,8 @@ for i in range(len(playerLinks)):
 	print("Player ", i+1, "/", NUM_RESULTS, sep="")
 	print("Player Profile Link:",playerLinks[i].get_attribute('href'))
 	# playerLinks[i].click()
-	stats.addPlayerStats(playerLinks[i].get_attribute('href'), i+1)
+	rank = i+1
+	stats.addPlayerStats(playerLinks[i].get_attribute('href'), rank, table)
 
 	#TODO: GET AZERITE TRAITS FROM raider.io???
 

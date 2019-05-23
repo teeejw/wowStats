@@ -5,9 +5,24 @@ import pandas as pd
 import sys
 import codecs
 
+'''
+Database Schma
+	Databases: players.db, test.db
+	1 table for each class eg. MistweaverMonk
+	Fields
+		rank INTEGER
+		name TEXT
+		server TEXT
+		iLVL INTEGER
+		crit INTEGER
+		haste INTEGER
+		mastery INTEGER
+		versatility INTEGER
+'''
+
 # Set up DB and Connection
-connection = sqlite3.connect("players.db")
-#connection = sqlite3.connect("test.db")
+#connection = sqlite3.connect("players.db")
+connection = sqlite3.connect("test.db")
 
 cursor = connection.cursor()
 cursor.execute("CREATE TABLE IF NOT EXISTS players(rank INTEGER, name TEXT, server TEXT, iLVL INTEGER, crit INTEGER, haste INTEGER, mastery INTEGER, versatility INTEGER);")
