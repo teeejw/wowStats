@@ -4,6 +4,7 @@
 
 
 import os
+import sys
 import time
 from selenium import webdriver
 from selenium.common.exceptions import TimeoutException
@@ -13,7 +14,6 @@ from selenium.webdriver.support import expected_conditions as EC # available sin
 
 import get_player_stats as stats
 import db
-import sys
 
 '''
 # Kill webdriver processes that weren't exited properly

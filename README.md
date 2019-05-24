@@ -16,9 +16,14 @@ REQUIRED FILES
 DEPENDENCIES
 	selenium
 		python3 -m pip install selenium (don't want 2.7 version)
-	Beautiful Soup (bs4)
+	Beautiful Soup 4 (bs4)
+	urllib
+	pandas
 
 	Default packages
 		os
 		sys
 		time
+		codecs
+
+Use the sqlite3 command line tool to run queries
