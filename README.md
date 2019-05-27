@@ -1,5 +1,7 @@
 # wowStats
 
+# // TODO: Fix readme formatting
+
 Python3
 
 install to location in $PATH
