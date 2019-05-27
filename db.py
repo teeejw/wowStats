@@ -38,10 +38,10 @@ cursor.execute("CREATE TABLE IF NOT EXISTS players(rank INTEGER, name TEXT, serv
 connection.commit()
 
 # player = (1, 'FurplePence', 'Tichondrius', 408, 15, 6, 78, 10)
-def addPlayer(player):
+def addPlayer(table, player):
 	cursor = connection.cursor()
 	# TODO: Check if player is already in the DB
-	sql = 'INSERT INTO players(rank, name, server, iLVL, crit, haste, mastery, versatility) VALUES(?,?,?,?,?,?,?,?)'
+	sql = 'INSERT INTO {}(rank, name, server, iLVL, crit, haste, mastery, versatility) VALUES(?,?,?,?,?,?,?,?)'.format(table)
 	cursor.execute(sql, player)
 	connection.commit()
 
@@ -59,16 +59,41 @@ def commitConnection():
 def closeConnection():
 	connection.close()
 
+def establishConnection(database):
+	connection = sqlite3.connect(database)
+
+def establishTable(table):
+	cursor = connection.cursor()
+	exec_string = "CREATE TABLE IF NOT EXISTS {}(rank INTEGER, name TEXT, server TEXT, iLVL INTEGER, crit INTEGER, haste INTEGER, mastery INTEGER, versatility INTEGER);".format(table)
+	cursor.execute()
+	connection.commit()
+
+
+# Usage: output file=out.txt, database=test.db, table=test
 if __name__ == "__main__":
 	# TODO: make this dynamic based on DB
 	# TODO: make this work for all tables
+
+	database = 'test.db'
+	table = 'test'
+	fileName = 'out.txt'
+
+	# Accept command line arguments
+	if len(sys.argv) == 4:
+		fileName = sys.argv[1]
+		database = sys.argv[2]
+		table = sys.argv[3]
+
+	file = codecs.open(fileName, "w", "utf-8")
+	
+	establishConnection(database)
+
 	cursor = connection.cursor()
+
+	query_string = 'SELECT * FROM {}'.format(table)
+
 	result = pd.read_sql_query("SELECT * FROM players", connection)
 	cursor.close()
 
-	fileName = "out.txt"
-	if len(sys.argv) == 2:
-		fileName = sys.argv[1]
-	file = codecs.open(fileName, "w", "utf-8")
 
 	result.to_csv(fileName, sep='\t', encoding='utf-8')
