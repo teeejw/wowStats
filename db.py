@@ -20,9 +20,18 @@ Database Schma
 		versatility INTEGER
 '''
 
-# Set up DB and Connection
+'''
+USEAGE
+	call establishConnection(database)
+	call addPlayer(rank, name, server, iLVL, crit, haste, mastery, versatility)
+
+	__main__
+		prints all of the databases in the table
+'''
+
+# Allow all of db.py to access Connection
+connection = None
 #connection = sqlite3.connect("players.db")
-connection = sqlite3.connect("test.db")
 
 cursor = connection.cursor()
 cursor.execute("CREATE TABLE IF NOT EXISTS players(rank INTEGER, name TEXT, server TEXT, iLVL INTEGER, crit INTEGER, haste INTEGER, mastery INTEGER, versatility INTEGER);")
@@ -31,6 +40,7 @@ connection.commit()
 # player = (1, 'FurplePence', 'Tichondrius', 408, 15, 6, 78, 10)
 def addPlayer(player):
 	cursor = connection.cursor()
+	# TODO: Check if player is already in the DB
 	sql = 'INSERT INTO players(rank, name, server, iLVL, crit, haste, mastery, versatility) VALUES(?,?,?,?,?,?,?,?)'
 	cursor.execute(sql, player)
 	connection.commit()
@@ -40,6 +50,9 @@ def printDB():
 	print(pd.read_sql_query("SELECT * FROM players", connection))
 	cursor.close()
 
+def establishConnection(database):
+	connection = sqlite3.connect(database)
+
 def commitConnection():
 	connection.commit()
 
@@ -47,6 +60,8 @@ def closeConnection():
 	connection.close()
 
 if __name__ == "__main__":
+	# TODO: make this dynamic based on DB
+	# TODO: make this work for all tables
 	cursor = connection.cursor()
 	result = pd.read_sql_query("SELECT * FROM players", connection)
 	cursor.close()

@@ -33,6 +33,8 @@ def normalize(values):
 		weighted_values.append(val/avg)
 	return weighted_values
 '''
+find correlation between stats and iLVL and normalize based on that
+
 
 look at rank 1-4 top->bottom
 
